@@ -1,5 +1,12 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.next
-release.properties
+# for Maven
+target
+bin
+*.class
+.classpath
+.project
+.settings
+
+# Package Files #
+*.jar
+*.war
+*.ear
