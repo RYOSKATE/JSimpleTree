@@ -17,132 +17,132 @@ class NamedNode<TNode extends NamedNode<TNode, ?>, TValue> extends Node<TNode, T
 
 	@Property String name
 
-	final def getChild(String name) {
+	final def child(String name) {
 		children.findFirst[it.name == name]
 	}
 
-	final def getAncestors(String name) {
+	final def ancestors(String name) {
 		ancestors.filter[it.name == name]
 	}
 
-	final def getAncestorsAndSelf(String name) {
+	final def ancestorsAndSelf(String name) {
 		ancestorsAndSelf.filter[it.name == name]
 	}
 
-	final def getChildren(String name) {
+	final def children(String name) {
 		children.filter[it.name == name]
 	}
 
-	final def getNextsFromSelf(String name) {
+	final def nextsFromSelf(String name) {
 		nextsFromSelf.filter[it.name == name]
 	}
 
-	final def getNextsFromSelfAndSelf(String name) {
+	final def nextsFromSelfAndSelf(String name) {
 		nextsFromSelfAndSelf.filter[it.name == name]
 	}
 
-	final def getNextsFromLast(String name) {
+	final def nextsFromLast(String name) {
 		nextsFromLast.filter[it.name == name]
 	}
 
-	final def getNextsFromLastAndSelf(String name) {
+	final def nextsFromLastAndSelf(String name) {
 		nextsFromLastAndSelf.filter[it.name == name]
 	}
 
-	final def getPrevsFromFirst(String name) {
+	final def prevsFromFirst(String name) {
 		prevsFromFirst.filter[it.name == name]
 	}
 
-	final def getPrevsFromFirstAndSelf(String name) {
+	final def prevsFromFirstAndSelf(String name) {
 		prevsFromFirstAndSelf.filter[it.name == name]
 	}
 
-	final def getPrevsFromSelf(String name) {
+	final def prevsFromSelf(String name) {
 		prevsFromSelf.filter[it.name == name]
 	}
 
-	final def getPrevsFromSelfAndSelf(String name) {
+	final def prevsFromSelfAndSelf(String name) {
 		prevsFromSelfAndSelf.filter[it.name == name]
 	}
 
-	final def getDescendants(String name) {
+	final def descendants(String name) {
 		descendants.filter[it.name == name]
 	}
 
-	final def getDescendantsAndSelf(String name) {
+	final def descendantsAndSelf(String name) {
 		descendantsAndSelf.filter[it.name == name]
 	}
 
-	final def getSiblings(String name) {
+	final def siblings(String name) {
 		siblings.filter[it.name == name]
 	}
 
-	final def getSiblingsAndSelf(String name) {
+	final def siblingsAndSelf(String name) {
 		siblingsAndSelf.filter[it.name == name]
 	}
 
-	final def getAncestorsAndSiblingsAfterSelf(String name) {
+	final def ancestorsAndSiblingsAfterSelf(String name) {
 		ancestorsAndSiblingsAfterSelf.filter[it.name == name]
 	}
 
-	final def getAncestorsAndSiblingsAfterSelfAndSelf(String name) {
+	final def ancestorsAndSiblingsAfterSelfAndSelf(String name) {
 		ancestorsAndSiblingsAfterSelfAndSelf.filter[it.name == name]
 	}
 
-	final def getAncestorsAndSiblingsBeforeSelf(String name) {
+	final def ancestorsAndSiblingsBeforeSelf(String name) {
 		ancestorsAndSiblingsBeforeSelf.filter[it.name == name]
 	}
 
-	final def getAncestorsAndSiblingsBeforeSelfAndSelf(String name) {
+	final def ancestorsAndSiblingsBeforeSelfAndSelf(String name) {
 		ancestorsAndSiblingsBeforeSelfAndSelf.filter[it.name == name]
 	}
 
-	final def getAncestorsWithSingleChild(String name) {
+	final def ancestorsWithSingleChild(String name) {
 		ancestorsWithSingleChild.filter[it.name == name]
 	}
 
-	final def getAncestorsWithSingleChildAndSelf(String name) {
+	final def ancestorsWithSingleChildAndSelf(String name) {
 		ancestorsWithSingleChildAndSelf.filter[it.name == name]
 	}
 
-	final def getDescendantsOfSingle(String name) {
+	final def descendantsOfSingle(String name) {
 		descendantsOfSingle.filter[it.name == name]
 	}
 
-	final def getDescendantsOfSingleAndSelf(String name) {
+	final def descendantsOfSingleAndSelf(String name) {
 		descendantsOfSingleAndSelf.filter[it.name == name]
 	}
 
-	final def getDescendantsOfFirstChild(String name) {
+	final def descendantsOfFirstChild(String name) {
 		descendantsOfFirstChild.filter[it.name == name]
 	}
 
-	final def getDescendantsOfFirstChildAndSelf(String name) {
+	final def descendantsOfFirstChildAndSelf(String name) {
 		descendantsOfFirstChildAndSelf.filter[it.name == name]
 	}
 
-	final def getAncestors(String name, int inclusiveDepth) {
-		getAncestors(inclusiveDepth).filter[it.name == name]
+	final def ancestors(String name, int inclusiveDepth) {
+		ancestors(inclusiveDepth).filter[it.name == name]
 	}
 
-	final def getAncestorsAndSelf(String name, int inclusiveDepth) {
-		getAncestorsAndSelf(inclusiveDepth).filter[it.name == name]
+	final def ancestorsAndSelf(String name, int inclusiveDepth) {
+		ancestorsAndSelf(inclusiveDepth).filter[it.name == name]
 	}
 
-	final def getDescendants(String name, int inclusiveDepth) {
-		getDescendants(inclusiveDepth).filter[it.name == name]
+	final def descendants(String name, int inclusiveDepth) {
+		descendants(inclusiveDepth).filter[it.name == name]
 	}
 
-	final def getDescendantsAndSelf(String name, int inclusiveDepth) {
-		getDescendantsAndSelf(inclusiveDepth).filter[it.name == name]
+	final def descendantsAndSelf(String name, int inclusiveDepth) {
+		descendantsAndSelf(inclusiveDepth).filter[it.name == name]
 	}
 
-	final def getSiblings(String name, int inclusiveEachLength) {
-		getSiblings(inclusiveEachLength).filter[it.name == name];
+	final def siblings(String name, int inclusiveEachLength) {
+		siblings(inclusiveEachLength).filter[it.name == name];
 	}
 
-	final def getSiblingsAndSelf(String name, int inclusiveEachLength) {
-		getSiblingsAndSelf(inclusiveEachLength).filter[it.name == name]
+	final def siblingsAndSelf(String name, int inclusiveEachLength) {
+		siblingsAndSelf(inclusiveEachLength).filter[it.name == name]
 	}
 
 }

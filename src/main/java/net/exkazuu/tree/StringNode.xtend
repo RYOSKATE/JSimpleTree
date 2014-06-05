@@ -15,18 +15,18 @@ class StringNode extends NamedNode<StringNode, String> {
 	}
 
 	final def AddFirst(String value) {
-		return AddFirst(new StringNode(value));
+		return addFirst(new StringNode(value));
 	}
 
 	final def AddLast(String value) {
-		return AddLast(new StringNode(value));
+		return addLast(new StringNode(value));
 	}
 
 	final def AddNext(String value) {
-		return AddNext(new StringNode(value));
+		return addNext(new StringNode(value));
 	}
 
 	final def AddPrevious(String value) {
-		return AddPrevious(new StringNode(value));
+		return addPrevious(new StringNode(value));
 	}
 }

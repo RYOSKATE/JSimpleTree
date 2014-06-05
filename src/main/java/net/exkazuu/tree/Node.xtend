@@ -15,15 +15,15 @@ public class Node<TNode extends Node<TNode, ?>, TValue> extends NodeBase<TNode, 
 		super(value)
 	}
 
-	final def getChildrenCount() {
+	final def childrenCount() {
 		children.length
 	}
 
-	final def getChildAtOrNull(int index) {
+	final def childAtOrNull(int index) {
 		children.drop(index).head
 	}
 
-	final def getAncestors() {
+	final def ancestors() {
 		ancestorsAndSelf.tail
 	}
 
@@ -35,65 +35,92 @@ public class Node<TNode extends Node<TNode, ?>, TValue> extends NodeBase<TNode, 
 		nextsFromLast + #[thisNode]
 	}
 
-	final def getPrevsFromFirstAndSelf() {
+	final def prevsFromFirstAndSelf() {
 		prevsFromFirst + #[thisNode]
 	}
 
-	final def getPrevsFromSelfAndSelf() {
+	final def prevsFromSelfAndSelf() {
 		#[thisNode] + prevsFromSelf
 	}
 
-	final def getDescendantsAndSelf() {
+	final def descendantsAndSelf() {
 		#[thisNode] + descendants
 	}
 
-	final def getAncestorsAndSiblingsAfterSelf() {
+	final def ancestorsAndSiblingsAfterSelf() {
 		ancestorsAndSelf.map[it.nextsFromSelf].flatten
 	}
 
-	final def getAncestorsAndSiblingsAfterSelfAndSelf() {
+	final def ancestorsAndSiblingsAfterSelfAndSelf() {
 		#[thisNode] + ancestorsAndSiblingsAfterSelf
 	}
 
-	final def getAncestorsAndSiblingsBeforeSelf() {
+	final def ancestorsAndSiblingsBeforeSelf() {
 		ancestorsAndSiblingsBeforeSelfAndSelf.tail
 	}
 
-	final def getAncestorsAndSiblingsBeforeSelfAndSelf() {
+	final def ancestorsAndSiblingsBeforeSelfAndSelf() {
 		ancestorsAndSelf.map[it.prevsFromSelfAndSelf].flatten
 	}
 
-	final def getAncestorsWithSingleChildAndSelf() {
+	final def ancestorsWithSingleChildAndSelf() {
 		#[thisNode] + ancestorsWithSingleChild
 	}
 
-	final def getDescendantsOfSingleAndSelf() {
+	final def descendantsOfSingleAndSelf() {
 		#[thisNode] + descendantsOfSingle
 	}
 
-	final def getDescendantsOfFirstChildAndSelf() {
+	final def descendantsOfFirstChildAndSelf() {
 		#[thisNode] + descendantsOfFirstChild
 	}
 
-	final def getAncestors(int inclusiveDepth) {
+	final def ancestors(int inclusiveDepth) {
 		ancestors.take(inclusiveDepth)
 	}
 
-	final def getAncestorsAndSelf(int inclusiveDepth) {
+	final def ancestorsAndSelf(int inclusiveDepth) {
 		ancestorsAndSelf.take(inclusiveDepth + 1)
 	}
 
-	final def getDescendantsAndSelf(int inclusiveDepth) {
-		#[thisNode] + getDescendants(inclusiveDepth)
+	final def descendantsAndSelf(int inclusiveDepth) {
+		#[thisNode] + descendants(inclusiveDepth)
 	}
 
-	final def getSiblings(int inclusiveEachLength) {
-		return prevsFromSelf.take(inclusiveEachLength).toList.reverse + nextsFromSelf.take(inclusiveEachLength);
+	final def siblings(int inclusiveEachLength) {
+		return prevsFromSelf.take(inclusiveEachLength).toList.reverse + nextsFromSelf.take(inclusiveEachLength)
 	}
 
-	final def getSiblingsAndSelf(int inclusiveEachLength) {
+	final def siblingsAndSelf(int inclusiveEachLength) {
 		return prevsFromSelf.take(inclusiveEachLength).toList.reverse + #[thisNode] +
-			nextsFromSelf.take(inclusiveEachLength);
+			nextsFromSelf.take(inclusiveEachLength)
 	}
 
+	final def remove() {
+		if (_parent == null) {
+			return null
+		}
+		val next = _cyclicNext
+		val action = if (next != this) {
+				_cyclicPrev._cyclicNext = next
+				next._cyclicPrev = _cyclicPrev
+				if (_parent._firstChild == this) {
+					_parent._firstChild = next;
+					[ |
+						next._parent._firstChild = thisNode
+						next.addPreviousIgnoringFirstChild(thisNode)
+					]
+				} else {
+					[|next.addPreviousIgnoringFirstChild(thisNode)]
+				}
+			} else {
+				val parent = _parent
+				parent._firstChild = null
+				[|parent.addFirst(thisNode)]
+			}
+		_cyclicNext = null
+		_cyclicPrev = null
+		_parent = null
+		return action
+	}
 }

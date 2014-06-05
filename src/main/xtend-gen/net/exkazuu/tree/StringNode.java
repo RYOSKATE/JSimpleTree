@@ -3,7 +3,7 @@ package net.exkazuu.tree;
 import net.exkazuu.tree.NamedNode;
 
 @SuppressWarnings("all")
-public class StringNode extends NamedNode<StringNode,String> {
+public class StringNode extends NamedNode<StringNode, String> {
   public StringNode(final String node) {
     super(node);
   }
@@ -18,21 +18,21 @@ public class StringNode extends NamedNode<StringNode,String> {
   
   public final StringNode AddFirst(final String value) {
     StringNode _stringNode = new StringNode(value);
-    return this.AddFirst(_stringNode);
+    return this.addFirst(_stringNode);
   }
   
   public final StringNode AddLast(final String value) {
     StringNode _stringNode = new StringNode(value);
-    return this.AddLast(_stringNode);
+    return this.addLast(_stringNode);
   }
   
   public final StringNode AddNext(final String value) {
     StringNode _stringNode = new StringNode(value);
-    return this.AddNext(_stringNode);
+    return this.addNext(_stringNode);
   }
   
   public final StringNode AddPrevious(final String value) {
     StringNode _stringNode = new StringNode(value);
-    return this.AddPrevious(_stringNode);
+    return this.addPrevious(_stringNode);
   }
 }

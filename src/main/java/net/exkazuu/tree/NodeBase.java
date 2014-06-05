@@ -40,16 +40,16 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
    * Initializes a new instance of the Node class with a default value.
    */
   protected NodeBase() {
-    _cyclicPrev = getThisNode();
-    _cyclicNext = getThisNode();
+    _cyclicPrev = thisNode();
+    _cyclicNext = thisNode();
   }
 
   /**
    * Initializes a new instance of the Node class with the specified value.
    */
   protected NodeBase(TValue value) {
-    _cyclicPrev = getThisNode();
-    _cyclicNext = getThisNode();
+    _cyclicPrev = thisNode();
+    _cyclicNext = thisNode();
     _value = value;
   }
 
@@ -57,75 +57,75 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
    * The casted this instance for the simplicity.
    */
   @SuppressWarnings("unchecked")
-  protected final TNode getThisNode() {
+  protected final TNode thisNode() {
     return (TNode) this;
   }
 
   /**
    * Gets the parent node.
    */
-  public final TNode getParent() {
+  public final TNode parent() {
     return _parent;
   }
 
   /**
    * Gets the previous node.
    */
-  public final TNode getCyclicPrev() {
+  public final TNode cyclicPrev() {
     return _cyclicPrev;
   }
 
   /**
    * Gets the next node.
    */
-  public final TNode getCyclicNext() {
+  public final TNode cyclicNext() {
     return _cyclicNext;
   }
 
   /**
    * Gets the first child node.
    */
-  public final TNode getFirstChild() {
+  public final TNode firstChild() {
     return _firstChild;
   }
 
   /**
    * Gets the last child node.
    */
-  public final TNode getLastChild() {
+  public final TNode lastChild() {
     return _firstChild != null ? _firstChild._cyclicPrev : null;
   }
 
   /**
    * Gets the previous node or null.
    */
-  public final TNode getPrev() {
-    return _cyclicPrev != getLastSibling() ? _cyclicPrev : null;
+  public final TNode prev() {
+    return _cyclicPrev != lastSibling() ? _cyclicPrev : null;
   }
 
   /**
    * Gets the next node or null.
    */
-  public final TNode getNext() {
-    return _cyclicNext != getFirstSibling() ? _cyclicNext : null;
+  public final TNode next() {
+    return _cyclicNext != firstSibling() ? _cyclicNext : null;
   }
 
   /**
    * Gets the first sibling node or the current node.
    */
-  public final TNode getFirstSibling() {
-    return _parent != null ? _parent._firstChild : getThisNode();
+  public final TNode firstSibling() {
+    return _parent != null ? _parent._firstChild : thisNode();
   }
 
   /**
    * Gets the last sibling node or the current node.
    */
-  public final TNode getLastSibling() {
-    return _parent != null ? _parent._firstChild._cyclicPrev : getThisNode();
+  public final TNode lastSibling() {
+    return _parent != null ? _parent._firstChild._cyclicPrev : thisNode();
   }
 
-  public final Iterable<TNode> getAncestorsAndSelf() {
-    final TNode thisNode = getThisNode();
+  public final Iterable<TNode> ancestorsAndSelf() {
+    final TNode thisNode = thisNode();
     return new Iterable<TNode>() {
       @Override
       public Iterator<TNode> iterator() {
@@ -156,7 +156,7 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getChildren() {
+  public final Iterable<TNode> children() {
     final TNode head = _firstChild;
     if (head == null) {
       return Collections.emptyList();
@@ -193,9 +193,9 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getNextsFromSelf() {
+  public final Iterable<TNode> nextsFromSelf() {
     final TNode node = _cyclicNext;
-    final TNode terminal = getFirstSibling();
+    final TNode terminal = firstSibling();
 
     return new Iterable<TNode>() {
       @Override
@@ -227,9 +227,9 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getNextsFromLast() {
-    final TNode node = getLastSibling();
-    final TNode terminal = getThisNode();
+  public final Iterable<TNode> nextsFromLast() {
+    final TNode node = lastSibling();
+    final TNode terminal = thisNode();
 
     return new Iterable<TNode>() {
       @Override
@@ -261,9 +261,9 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getPrevsFromFirst() {
-    final TNode node = getFirstSibling();
-    final TNode terminal = getThisNode();
+  public final Iterable<TNode> prevsFromFirst() {
+    final TNode node = firstSibling();
+    final TNode terminal = thisNode();
 
     return new Iterable<TNode>() {
       @Override
@@ -295,9 +295,9 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getPrevsFromSelf() {
+  public final Iterable<TNode> prevsFromSelf() {
     final TNode node = _cyclicPrev;
-    final TNode terminal = getLastSibling();
+    final TNode terminal = lastSibling();
 
     return new Iterable<TNode>() {
       @Override
@@ -329,8 +329,8 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getDescendants() {
-    final TNode start = getThisNode();
+  public final Iterable<TNode> descendants() {
+    final TNode start = thisNode();
     if (start._firstChild == null) {
       return Collections.emptyList();
     }
@@ -361,7 +361,7 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
               cursor = cursor._firstChild;
               return cursor;
             }
-            while (cursor.getNext() == null) {
+            while (cursor.next() == null) {
               cursor = cursor._parent;
               if (cursor == start) {
                 return null;
@@ -380,12 +380,12 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getSiblings() {
-    TNode head = getFirstSibling();
+  public final Iterable<TNode> siblings() {
+    TNode head = firstSibling();
     if (head == null || head._cyclicNext == head) {
       return Collections.emptyList();
     }
-    final TNode thisNode = getThisNode();
+    final TNode thisNode = thisNode();
     final TNode terminal = head != thisNode ? head : head._cyclicNext;
     return new Iterable<TNode>() {
       @Override
@@ -422,8 +422,8 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getSiblingsAndSelf() {
-    final TNode head = getFirstSibling();
+  public final Iterable<TNode> siblingsAndSelf() {
+    final TNode head = firstSibling();
     if (head == null) {
       return Collections.emptyList();
     }
@@ -459,8 +459,8 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getAncestorsWithSingleChild() {
-    final TNode node = getThisNode();
+  public final Iterable<TNode> ancestorsWithSingleChild() {
+    final TNode node = thisNode();
     return new Iterable<TNode>() {
       @Override
       public Iterator<TNode> iterator() {
@@ -490,7 +490,7 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getDescendantsOfSingle() {
+  public final Iterable<TNode> descendantsOfSingle() {
     final TNode node = _firstChild;
     return new Iterable<TNode>() {
       @Override
@@ -522,7 +522,7 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getDescendantsOfFirstChild() {
+  public final Iterable<TNode> descendantsOfFirstChild() {
     final TNode node = _firstChild;
     return new Iterable<TNode>() {
       @Override
@@ -554,8 +554,8 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final Iterable<TNode> getDescendants(final int inclusiveDepth) {
-    final TNode start = getThisNode();
+  public final Iterable<TNode> descendants(final int inclusiveDepth) {
+    final TNode start = thisNode();
     if (start._firstChild == null || inclusiveDepth <= 0) {
       return Collections.emptyList();
     }
@@ -588,7 +588,7 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
               _inclusiveDepth--;
               return cursor;
             }
-            while (cursor.getNext() == null) {
+            while (cursor.next() == null) {
               cursor = cursor._parent;
               _inclusiveDepth++;
               if (cursor == start) {
@@ -608,90 +608,71 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
     };
   }
 
-  public final TNode AddPrevious(TNode node) {
+  public final TNode addPrevious(TNode node) {
     Preconditions.checkNotNull(node);
     Preconditions.checkNotNull(_parent);
     Preconditions.checkArgument(node._parent == null);
     if (_parent._firstChild == this) {
       _parent._firstChild = node;
     }
-    return AddPreviousIgnoringFirstChild(node);
+    return addPreviousIgnoringFirstChild(node);
   }
 
-  public final TNode AddNext(TNode node) {
+  public final TNode addNext(TNode node) {
     Preconditions.checkNotNull(node);
     Preconditions.checkNotNull(_parent);
     Preconditions.checkArgument(node._parent == null);
-    return _cyclicNext.AddPreviousIgnoringFirstChild(node);
+    return _cyclicNext.addPreviousIgnoringFirstChild(node);
   }
 
-  public final TNode AddFirst(TNode node) {
+  public final TNode addFirst(TNode node) {
     Preconditions.checkNotNull(node);
     Preconditions.checkArgument(node._parent == null);
-    return AddFirstPrivate(node);
+    return addFirstPrivate(node);
   }
 
-  private final TNode AddFirstPrivate(TNode node) {
-    AddLastPrivate(node);
+  private final TNode addFirstPrivate(TNode node) {
+    addLastPrivate(node);
     _firstChild = node;
     return node;
   }
 
-  protected final TNode AddPreviousIgnoringFirstChild(TNode node) {
+  protected final TNode addPreviousIgnoringFirstChild(TNode node) {
     node._parent = _parent;
-    node._cyclicNext = getThisNode();
+    node._cyclicNext = thisNode();
     node._cyclicPrev = _cyclicPrev;
     _cyclicPrev._cyclicNext = node;
     _cyclicPrev = node;
     return node;
   }
 
-  public final TNode AddLast(TNode node) {
+  public final TNode addLast(TNode node) {
     Preconditions.checkNotNull(node);
     Preconditions.checkArgument(node._parent == null);
-    return AddLastPrivate(node);
+    return addLastPrivate(node);
   }
 
-  private final TNode AddLastPrivate(TNode node) {
+  private final TNode addLastPrivate(TNode node) {
     TNode second = _firstChild;
     if (second == null) {
-      node._parent = getThisNode();
+      node._parent = thisNode();
       node._cyclicNext = node;
       node._cyclicPrev = node;
       _firstChild = node;
     } else {
-      second.AddPreviousIgnoringFirstChild(node);
+      second.addPreviousIgnoringFirstChild(node);
     }
     return node;
-  }
-
-  public final boolean Remove() {
-    if (_parent == null) {
-      return false;
-    }
-    if (_cyclicNext != this) {
-      if (_parent._firstChild == this) {
-        _parent._firstChild = _cyclicNext;
-      }
-      _cyclicPrev._cyclicNext = _cyclicNext;
-      _cyclicNext._cyclicPrev = _cyclicPrev;
-    } else {
-      _parent._firstChild = null;
-    }
-    _cyclicNext = null;
-    _cyclicPrev = null;
-    _parent = null;
-    return true;
   }
 
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
-    ToStringPrivate(getThisNode(), 0, builder);
+    toStringPrivate(thisNode(), 0, builder);
     return builder.toString();
   }
 
-  private final static <TNode extends NodeBase<TNode, T>, T> void ToStringPrivate(TNode node,
+  private final static <TNode extends NodeBase<TNode, T>, T> void toStringPrivate(TNode node,
       int depth, StringBuilder builder) {
     if (node == null) {
       return;
@@ -702,8 +683,8 @@ public class NodeBase<TNode extends NodeBase<TNode, TValue>, TValue> {
 
     builder.append(node._value != null ? node._value.toString() : "");
     builder.append(System.lineSeparator());
-    for (TNode child : node.getChildren()) {
-      ToStringPrivate(child, depth + 1, builder);
+    for (TNode child : node.children()) {
+      toStringPrivate(child, depth + 1, builder);
     }
   }
 }

@@ -13,24 +13,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <encoding>UTF-8</encoding>
-    <xtend.version>2.5.4</xtend.version>
+    <xtend.version>2.6.0</xtend.version>
   </properties>
-
-  <repositories>
-    <!-- Xtend repository -->
-    <repository>
-      <id>xtend-repos</id>
-      <url>http://build.eclipse.org/common/xtend/maven/</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <!-- Xtend repository -->
-    <pluginRepository>
-      <id>xtend-repos</id>
-      <url>http://build.eclipse.org/common/xtend/maven/</url>
-    </pluginRepository>
-  </pluginRepositories>
   
   <dependencies>
     <!-- Xtend dependencies -->
@@ -39,6 +23,7 @@
       <artifactId>org.eclipse.xtend.lib</artifactId>
       <version>${xtend.version}</version>
     </dependency>
+    
     <!-- for test -->
     <dependency>
       <groupId>junit</groupId>
@@ -73,6 +58,10 @@
               <goal>compile</goal>
               <goal>testCompile</goal>
             </goals>
+            <configuration>
+              <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+              <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>
