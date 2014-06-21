@@ -1,6 +1,6 @@
 package net.exkazuu.tree
 
-class NamedNode<TNode extends NamedNode<TNode, ?>, TValue> extends Node<TNode, TValue> {
+class NamedNode<TNode extends NamedNode<TNode, TValue>, TValue> extends Node<TNode, TValue> {
 
 	/**
      * Initializes a new instance of the Node class with a default value.

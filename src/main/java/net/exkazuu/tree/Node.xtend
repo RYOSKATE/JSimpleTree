@@ -1,6 +1,6 @@
 package net.exkazuu.tree
 
-public class Node<TNode extends Node<TNode, ?>, TValue> extends NodeBase<TNode, TValue> {
+public class Node<TNode extends Node<TNode, TValue>, TValue> extends NodeBase<TNode, TValue> {
 
 	/**
      * Initializes a new instance of the Node class with a default value.
