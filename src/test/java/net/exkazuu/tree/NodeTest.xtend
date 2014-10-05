@@ -181,25 +181,28 @@ class NodeTest {
 		assertThat(e.descendantsOfFirstChild.toList, is(#[].toList));
 		assertThat(e.descendantsOfFirstChildAndSelf.toList, is(#[e].toList));
 
-		val restoreG = g.remove()
+		val restoreG = g.recoverablyRemove()
 		assertThat(restoreG, is(not(nullValue)))
 		assertThat(a.descendants.map[it.value].join, is("edbflimc"))
 
-		val restoreF = f.remove()
+		val restoreF = f.recoverablyRemove()
 		assertThat(restoreF, is(not(nullValue)))
 		assertThat(a.descendants.map[it.value].join, is("edbc"))
 
-		assertThat(g.remove(), is(nullValue))
-		assertThat(f.remove(), is(nullValue))
+		val anotherRestoreF = f.recoverablyRemove();
+		restoreF.apply();
+		anotherRestoreF.apply();
+		restoreF.apply();
+		assertThat(a.descendants().map[it.value].join, is("edbflimc"));
+		var anotherRestoreG = g.recoverablyRemove();
+		restoreG.apply();
+		anotherRestoreG.apply();
+		restoreG.apply();
+		assertThat(a.descendants().map[it.value].join, is("edbgkhjflimc"));
 
-		restoreF.apply
-		assertThat(a.descendants.map[it.value].join, is("edbflimc"))
-		restoreG.apply
-		assertThat(a.descendants.map[it.value].join, is("edbgkhjflimc"))
-
-		assertThat(a.remove(), is(nullValue))
+		assertThat(a.recoverablyRemove(), is(nullValue));
 		for (node : a.descendants().toList) {
-			var restore = node.remove()
+			var restore = node.recoverablyRemove()
 			assertThat(restore, is(not(nullValue)))
 			assertThat(a.descendants.map[it.value].join, is(not(containsString(node.value))))
 			restore.apply

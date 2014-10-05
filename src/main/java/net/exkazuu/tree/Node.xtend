@@ -96,31 +96,50 @@ public class Node<TNode extends Node<TNode, TValue>, TValue> extends NodeBase<TN
 			nextsFromSelf.take(inclusiveEachLength)
 	}
 
-	final def remove() {
+	final def recoverablyRemove() {
 		if (_parent == null) {
 			return null
 		}
 		val next = _cyclicNext
-		val action = if (next != this) {
-				_cyclicPrev._cyclicNext = next
-				next._cyclicPrev = _cyclicPrev
-				if (_parent._firstChild == this) {
-					_parent._firstChild = next;
-					[ |
-						next._parent._firstChild = thisNode
-						next.addPreviousIgnoringFirstChild(thisNode)
-					]
-				} else {
-					[|next.addPreviousIgnoringFirstChild(thisNode)]
-				}
+		if (next != this) {
+			_cyclicPrev._cyclicNext = next
+			next._cyclicPrev = _cyclicPrev
+			if (_parent._firstChild == this) {
+				_parent._firstChild = next;
+				[ |
+					next._parent._firstChild = thisNode;
+					_cyclicPrev._cyclicNext = thisNode;
+					next._cyclicPrev = thisNode;
+				]
 			} else {
-				val parent = _parent
-				parent._firstChild = null
-				[|parent.addFirst(thisNode)]
+				[ |
+					_cyclicPrev._cyclicNext = thisNode;
+					next._cyclicPrev = thisNode;
+				]
 			}
-		_cyclicNext = null
-		_cyclicPrev = null
-		_parent = null
-		return action
+		} else {
+			val parent = _parent
+			parent._firstChild = null
+			[|parent._firstChild = thisNode;]
+		}
+	}
+
+	final def Remove() {
+		if (_parent == null) {
+			return;
+		}
+		var next = _cyclicNext;
+		if (next != this) {
+			_cyclicPrev._cyclicNext = next;
+			next._cyclicPrev = _cyclicPrev;
+			if (_parent._firstChild == this) {
+				_parent._firstChild = next;
+			}
+		} else {
+			_parent._firstChild = null;
+		}
+		_cyclicNext = null;
+		_cyclicPrev = null;
+		_parent = null;
 	}
 }

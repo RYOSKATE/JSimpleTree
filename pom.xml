@@ -4,7 +4,7 @@
   <groupId>net.exkazuu</groupId>
   <artifactId>JSimpleTree</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>JTree</name>
+  <name>JSimpleTree</name>
 
   <properties>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -13,7 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <encoding>UTF-8</encoding>
-    <xtend.version>2.6.1</xtend.version>
+    <xtend.version>2.6.2</xtend.version>
   </properties>
   
   <dependencies>
