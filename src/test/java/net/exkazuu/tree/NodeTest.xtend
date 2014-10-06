@@ -70,8 +70,8 @@ class NodeTest {
 		var i = f.AddLast("i"); // 4
 		var j = h.AddNext("j"); // 4
 		var k = h.AddPrevious("k"); // 4
-		var l = i.AddPrevious("l"); // 4
-		var m = i.AddNext("m"); // 4
+		i.AddPrevious("l"); // 4
+		i.AddNext("m"); // 4
 		assertThat(a.toString,
 			is(
 				"a\n  e\n  d\n  b\n    g\n      k\n      h\n      j\n    f\n      l\n      i\n      m\n  c\n".
