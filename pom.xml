@@ -13,7 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <encoding>UTF-8</encoding>
-    <xtend.version>2.6.2</xtend.version>
+    <xtend.version>2.7.2</xtend.version>
   </properties>
   
   <dependencies>
@@ -59,8 +59,8 @@
               <goal>testCompile</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
-              <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+              <outputDirectory>${project.build.directory}/xtend-gen/main</outputDirectory>
+              <testOutputDirectory>${project.build.directory}/xtend-gen/test</testOutputDirectory>
             </configuration>
           </execution>
         </executions>
